@@ -1,0 +1,13 @@
+Minor notes:
+
+dotnet new -l <= lists all types to create
+
+dotnet new sln <= Creates new dotnet solution of current dotnet version. Applies directory/folder name to solution as name.
+
+dotnet new webapi -n API <= creates new web api project, same applies for other types such as classlib
+
+dotnet sln add API <= adds API project to solution, same is applied to other projects to add to solution.
+
+dotnet sln list <= prints list of all projects in given solution
+
+dotnet add reference ../Application <= adds application reference to current project
