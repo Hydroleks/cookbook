@@ -1,4 +1,12 @@
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog
+(
+    (hostingContext, loggingConfiguration) => 
+        loggingConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+);
 
 // Add services to the container.
 
@@ -22,4 +30,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+try
+{
+    Log.Information("Starting CookBook.");
+    await app.RunAsync();
+}
+catch(Exception ex)
+{
+    Log.Fatal(ex, "CookBook terminated unexpectedly.");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
