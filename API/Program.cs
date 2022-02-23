@@ -1,4 +1,6 @@
+using Persistence;
 using Serilog;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,16 +11,21 @@ builder.Host.UseSerilog
 );
 
 // Add services to the container.
+var configuration = builder.Configuration;
+var environment = builder.Environment;
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(options => {
+    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
