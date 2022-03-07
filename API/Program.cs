@@ -1,6 +1,8 @@
 using Persistence;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using Application.Posts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,8 @@ builder.Services.AddCors(option => {
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
     });
 });
+
+builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 
 var app = builder.Build();
 

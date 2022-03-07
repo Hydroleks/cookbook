@@ -1,27 +1,26 @@
 using API.Controllers;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
+using MediatR;
+using Application.Posts;
 
 public class PostsController : BaseApiController
 {
-    private readonly DataContext _context;
-
-    public PostsController(DataContext context)
+    private readonly IMediator _mediator;
+    public PostsController(IMediator mediator)
     {
-        _context = context;
+        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<ActionResult<List<Post>>> GetPostsAsync()
     {
-        return await _context.Posts.ToListAsync();
+        return await _mediator.Send(new List.Query());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Post>> GetPostAsync(Guid id)
     {
-        return await _context.Posts.FindAsync(id);
+        return Ok(); //for now.
     }
 }
