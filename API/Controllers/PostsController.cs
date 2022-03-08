@@ -14,6 +14,6 @@ public class PostsController : BaseApiController
     [HttpGet("{id}")]
     public async Task<ActionResult<Post>> GetPostAsync(Guid id)
     {
-        return Ok(); //for now.
+        return await Mediator.Send(new Detail.Query{ Id = id });
     }
 }
