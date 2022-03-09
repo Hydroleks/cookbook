@@ -3,6 +3,7 @@ using Serilog;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Application.Posts;
+using Application.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,8 @@ builder.Services.AddCors(option => {
     });
 });
 
-builder.Services.AddMediatR(typeof(List.Handler).Assembly);
+builder.Services.AddMediatR(typeof(List.Handler).Assembly)
+                .AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
