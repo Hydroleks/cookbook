@@ -18,7 +18,7 @@ public class List
 
         public async Task<List<Post>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts.ToListAsync(cancellationToken);
         }
     }
 }
