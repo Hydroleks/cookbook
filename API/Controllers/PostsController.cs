@@ -21,6 +21,13 @@ public class PostsController : BaseApiController
     [HttpPost]
     public async Task<IActionResult> CreatePostAsync(Post post)
     {
-        return Ok(await Mediator.Send(new Create.Command{Post = post}));
+        return Ok(await Mediator.Send(new Create.Command{ Post = post }));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> EditPostAsync(Guid id, Post post)
+    {
+        post.Id = id;
+        return Ok(await Mediator.Send(new Edit.Command{ Post = post }));
     }
 }
