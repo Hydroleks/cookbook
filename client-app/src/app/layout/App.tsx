@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
-import { List } from 'semantic-ui-react';
+import { Container, List } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 
@@ -15,16 +15,20 @@ function App() {
   }, []);
 
   return (
-    <div>
+    // Fragment groups things together, so we can return 2 things without the use of an empty div.
+    // Shortcut version using Fragment is just empty <> as below.
+    <> 
       <NavBar />
-      <List>
-        {posts.map(post => (
-            <List.Item key={post.id}>
-              {post.title}
-            </List.Item>
-          ))}
-      </List>
-    </div>
+      <Container style={{marginTop: '7em'}}>
+        <List>
+          {posts.map(post => (
+              <List.Item key={post.id}>
+                {post.title}
+              </List.Item>
+            ))}
+        </List>
+      </Container>
+    </>
   );
 }
 
