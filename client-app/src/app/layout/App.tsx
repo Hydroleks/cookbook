@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Header, List } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 import { Post } from '../models/post';
+import NavBar from './NavBar';
 
 function App() {
-
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div>
-      <Header as='h2' icon='users' content='Posts'/>
+      <NavBar />
       <List>
         {posts.map(post => (
             <List.Item key={post.id}>
