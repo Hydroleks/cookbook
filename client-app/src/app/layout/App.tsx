@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, List } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
+import PostDashboar from '../../features/posts/dashboard/PostDashboard';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -20,13 +21,7 @@ function App() {
     <> 
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <List>
-          {posts.map(post => (
-              <List.Item key={post.id}>
-                {post.title}
-              </List.Item>
-            ))}
-        </List>
+        <PostDashboar posts={posts}/>
       </Container>
     </>
   );
