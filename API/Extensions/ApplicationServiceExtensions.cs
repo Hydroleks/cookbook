@@ -24,7 +24,7 @@ public static class ApplicationServiceExtensions
                 policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
             });
         })
-        .AddMediatR(typeof(List.Handler).Assembly)
+        .AddMediatR(typeof(ListPost.Handler).Assembly)
                         .AddAutoMapper(typeof(MappingProfiles).Assembly);
 
         return services;

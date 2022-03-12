@@ -1,6 +1,8 @@
 Posts will extend Recipe.
 
-Recipe will contains Id, Title, Description, Instructions, IngredientIds
+Posts contain
+
+Recipe will contains Id, Title, Description, Instructions, Category
 
 Ingredients will contain Id, Title, Description
 

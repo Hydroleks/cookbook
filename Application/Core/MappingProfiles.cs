@@ -8,5 +8,7 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         CreateMap<Post, Post>();
+        CreateMap<Ingredient, Ingredient>();
+        CreateMap<Recipe, Recipe>();
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 using Persistence;
 
 namespace Application.Posts;
-public class Detail
+public class DetailPost
 {
     public class Query : IRequest<Post>
     {

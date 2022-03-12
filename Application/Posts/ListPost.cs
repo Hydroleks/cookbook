@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Posts;
-public class List
+public class ListPost
 {
     public class Query : IRequest<List<Post>> {}
 

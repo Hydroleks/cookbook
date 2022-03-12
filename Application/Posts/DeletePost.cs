@@ -1,14 +1,12 @@
-
 using MediatR;
 using Persistence;
 
 namespace Application.Posts;
-
-public class Create
+public class DeletePost
 {
     public class Command : IRequest
     {
-        public Domain.Post Post { get; set; }
+        public Guid Id { get; set; }
     }
 
     public class Handler : IRequestHandler<Command>
@@ -19,10 +17,11 @@ public class Create
         {
             _dataContext = dataContext;
         }
-        
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            _dataContext.Posts.Add(request.Post);
+            var post = await _dataContext.Posts.FindAsync(request.Id);
+
+            _dataContext.Remove(post);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 

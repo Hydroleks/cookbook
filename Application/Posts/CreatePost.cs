@@ -1,32 +1,31 @@
-using AutoMapper;
-using Domain;
+
 using MediatR;
 using Persistence;
 
 namespace Application.Posts;
-public class Edit
+
+public class CreatePost
 {
     public class Command : IRequest
     {
-        public Post Post { get; set; }
+        public Domain.Post Post { get; set; }
     }
 
     public class Handler : IRequestHandler<Command>
     {
         private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
 
-        public Handler(DataContext dataContext, IMapper mapper)
+        public Handler(DataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapper;
         }
-
+        
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            var post = await _dataContext.Posts.FindAsync(request.Post.Id);
+            request.Post.Created = DateTime.Now;
+            request.Post.Modified = DateTime.Now;
 
-            _mapper.Map(request.Post, post);
+            _dataContext.Posts.Add(request.Post);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 
