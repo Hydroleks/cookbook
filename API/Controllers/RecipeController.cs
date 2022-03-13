@@ -16,4 +16,23 @@ public class RecipeController : BaseApiController
     {
         return await Mediator.Send(new DetailRecipe.Query{ Id = id }, cancellationToken);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateRecipeAsync(Recipe recipe, CancellationToken cancellationToken)
+    {
+        return Ok(await Mediator.Send(new CreateRecipe.Command{ Recipe = recipe }, cancellationToken));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> EditRecipeAsync(Guid id, Recipe recipe, CancellationToken cancellationToken)
+    {
+        recipe.Id = id;
+        return Ok(await Mediator.Send(new EditRecipe.Command{ Recipe = recipe }, cancellationToken));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteRecipeAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return Ok(await Mediator.Send(new DeleteRecipe.Command{ Id = id }, cancellationToken));
+    }
 }

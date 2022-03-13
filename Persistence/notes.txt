@@ -1,4 +1,4 @@
-Posts will extend Recipe.
+Posts will be extended by Recipe, and by Ingredient table.
 
 Posts contain
 

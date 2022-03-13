@@ -1,15 +1,14 @@
-
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Posts;
+namespace Application.Ingredients;
 
-public class CreatePost
+public class CreateIngredient
 {
     public class Command : IRequest
     {
-        public Post Post { get; set; }
+        public Ingredient Ingredient { get; set; }
     }
 
     public class Handler : IRequestHandler<Command>
@@ -23,10 +22,10 @@ public class CreatePost
         
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            request.Post.Created = DateTime.Now;
-            request.Post.Modified = DateTime.Now;
+            request.Ingredient.Created = DateTime.Now;
+            request.Ingredient.Modified = DateTime.Now;
 
-            _dataContext.Posts.Add(request.Post);
+            _dataContext.Ingredients.Add(request.Ingredient);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 

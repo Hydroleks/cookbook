@@ -1,32 +1,35 @@
-
+using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Posts;
+namespace Application.Recipes;
 
-public class CreatePost
+public class EditRecipe
 {
     public class Command : IRequest
     {
-        public Post Post { get; set; }
+        public Recipe Recipe { get; set; }
     }
 
     public class Handler : IRequestHandler<Command>
     {
         private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
-        public Handler(DataContext dataContext)
+        public Handler(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
+            _mapper = mapper;
         }
-        
+
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            request.Post.Created = DateTime.Now;
-            request.Post.Modified = DateTime.Now;
+            var recipe = await _dataContext.Recipes.FindAsync(request.Recipe.Id);
 
-            _dataContext.Posts.Add(request.Post);
+            recipe.Modified = DateTime.Now;
+
+            _mapper.Map(request.Recipe, recipe);
 
             await _dataContext.SaveChangesAsync(cancellationToken);
 
