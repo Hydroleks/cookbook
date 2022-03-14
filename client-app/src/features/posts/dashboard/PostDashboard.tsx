@@ -1,6 +1,7 @@
 import react from 'react';
-import { Grid, List } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { Post } from '../../../app/models/post';
+import PostList from './PostList';
 
 interface Props{
     posts: Post[];
@@ -10,13 +11,7 @@ export default function PostDashboar({posts}: Props){
     return (
         <Grid>
             <Grid.Column width='10'>
-                <List>
-                    {posts.map(post => (
-                        <List.Item key={post.id}>
-                            {post.title}
-                        </List.Item>
-                    ))}
-                </List>
+                <PostList posts={posts}/>
             </Grid.Column>
         </Grid>
     );
