@@ -7,6 +7,7 @@ import PostDashboar from '../../features/posts/dashboard/PostDashboard';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
 
   useEffect(() => {
     axios.get<Post[]>("https://localhost:5001/api/Posts").then(response => {
@@ -15,13 +16,26 @@ function App() {
     });
   }, []);
 
+  function handleSelectPost(id: string) {
+    setSelectedPost(posts.find(post => post.id === id));
+  }
+
+  function handleCanelSelectPost(){
+    setSelectedPost(undefined);
+  }
+
   return (
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
     // Shortcut version using Fragment is just empty <> as below.
     <> 
       <NavBar />
       <Container style={{marginTop: '7em'}}>
-        <PostDashboar posts={posts}/>
+        <PostDashboar 
+          posts={posts}
+          selectedPost={selectedPost}
+          selectPost={handleSelectPost}
+          cancelSelectPost={handleCanelSelectPost}
+          />
       </Container>
     </>
   );

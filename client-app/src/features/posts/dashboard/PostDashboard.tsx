@@ -7,17 +7,20 @@ import PostList from './PostList';
 
 interface Props{
     posts: Post[];
+    selectedPost: Post | undefined;
+    selectPost: (id: string) => void;
+    cancelSelectPost: () => void;
 }
 
-export default function PostDashboar({posts}: Props){
+export default function PostDashboar({posts, selectedPost, selectPost, cancelSelectPost}: Props){
     return (
         <Grid>
             <Grid.Column width='10'>
-                <PostList posts={posts}/>
+                <PostList posts={posts} selectPost={selectPost}/>
             </Grid.Column>
             <Grid.Column width='6'>
-                {posts[0] &&
-                <PostDetails post={posts[0]} />}
+                {selectedPost &&
+                <PostDetails post={selectedPost} cancelSelectPost={cancelSelectPost}/>}
                 <PostForm />
             </Grid.Column>
         </Grid>

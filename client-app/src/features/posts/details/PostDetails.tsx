@@ -3,10 +3,11 @@ import { Card, Image, Button } from 'semantic-ui-react';
 import { Post } from '../../../app/models/post';
 
 interface Props{
-    post: Post
+    post: Post;
+    cancelSelectPost:() => void;
 }
 
-export default function PostDetails({post}: Props){
+export default function PostDetails({post, cancelSelectPost}: Props){
     return (
         <Card fluid>
         <Image src={`/assets/post.png`} />
@@ -25,7 +26,7 @@ export default function PostDetails({post}: Props){
           </Card.Meta>
           <Button.Group widths='2'>
               <Button basic color='blue' content='Edit' />
-              <Button basic color='grey' content='cancel' />
+              <Button onClick={cancelSelectPost} basic color='grey' content='Cancel' />
           </Button.Group>
         </Card.Content>
       </Card>
