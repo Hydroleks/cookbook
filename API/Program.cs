@@ -1,9 +1,6 @@
 using Persistence;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
-using MediatR;
-using Application.Posts;
-using Application.Core;
 using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
