@@ -10,18 +10,22 @@ interface Props{
     selectedPost: Post | undefined;
     selectPost: (id: string) => void;
     cancelSelectPost: () => void;
+    editMode: boolean,
+    openForm: (id: string) => void;
+    closeForm: () => void;
 }
 
-export default function PostDashboar({posts, selectedPost, selectPost, cancelSelectPost}: Props){
+export default function PostDashboar({posts, selectedPost, selectPost, cancelSelectPost, editMode, openForm, closeForm}: Props){
     return (
         <Grid>
             <Grid.Column width='10'>
                 <PostList posts={posts} selectPost={selectPost}/>
             </Grid.Column>
             <Grid.Column width='6'>
-                {selectedPost &&
-                <PostDetails post={selectedPost} cancelSelectPost={cancelSelectPost}/>}
-                <PostForm />
+                {selectedPost && !editMode &&
+                <PostDetails post={selectedPost} cancelSelectPost={cancelSelectPost} openForm={openForm}/>}
+                { editMode && 
+                <PostForm closeForm={closeForm} post={selectedPost}/> }
             </Grid.Column>
         </Grid>
     );
