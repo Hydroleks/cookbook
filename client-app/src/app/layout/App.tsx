@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, List } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
+import { v4 as uuid } from 'uuid';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -37,7 +38,7 @@ function App() {
   function handleCreateOrEditPost(post: Post) {
     post.id
       ? setPosts([...posts.filter(p => p.id !== post.id), post])
-      : setPosts([...posts, post]);
+      : setPosts([...posts, {...post, id: uuid()}]);
     
     setEditMode(false);
     setSelectedPost(post);
