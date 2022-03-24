@@ -5,9 +5,10 @@ import { Post } from '../../../app/models/post';
 interface Props{
     post: Post | undefined;
     closeForm: () => void;
+    createOrEdit: (post: Post) => void;
 }
 
-export default function PostForm({post: selectedPost, closeForm}: Props) {
+export default function PostForm({post: selectedPost, closeForm, createOrEdit}: Props) {
 
     const initialState = selectedPost ?? {
         id: '',
@@ -20,7 +21,7 @@ export default function PostForm({post: selectedPost, closeForm}: Props) {
     const [post, setPost] = useState(initialState);
 
     function handleSubmit() {
-        console.log(post);
+        createOrEdit(post);
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {

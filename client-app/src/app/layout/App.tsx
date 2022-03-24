@@ -34,6 +34,15 @@ function App() {
     setEditMode(false);
   }
 
+  function handleCreateOrEditPost(post: Post) {
+    post.id
+      ? setPosts([...posts.filter(p => p.id !== post.id), post])
+      : setPosts([...posts, post]);
+    
+    setEditMode(false);
+    setSelectedPost(post);
+  }
+
   return (
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
     // Shortcut version using Fragment is just empty <> as below.
@@ -48,6 +57,7 @@ function App() {
           editMode={editMode}
           openForm={handleFormOpen}
           closeForm={handleFormClose}
+          createOrEdit={handleCreateOrEditPost}
           />
       </Container>
     </>
