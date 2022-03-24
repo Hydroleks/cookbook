@@ -44,6 +44,10 @@ function App() {
     setSelectedPost(post);
   }
 
+  function handleDeletePost(id: string) {
+    setPosts([...posts.filter(post => post.id !== id)]);
+  }
+
   return (
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
     // Shortcut version using Fragment is just empty <> as below.
@@ -59,6 +63,7 @@ function App() {
           openForm={handleFormOpen}
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditPost}
+          deletePost={handleDeletePost}
           />
       </Container>
     </>

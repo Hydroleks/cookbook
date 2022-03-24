@@ -14,13 +14,14 @@ interface Props{
     openForm: (id: string) => void;
     closeForm: () => void;
     createOrEdit: (post: Post) => void;
+    deletePost: (id: string) => void;
 }
 
-export default function PostDashboar({posts, selectedPost, selectPost, cancelSelectPost, editMode, openForm, closeForm, createOrEdit}: Props){
+export default function PostDashboar({posts, selectedPost, selectPost, cancelSelectPost, editMode, openForm, closeForm, createOrEdit, deletePost}: Props){
     return (
         <Grid>
             <Grid.Column width='10'>
-                <PostList posts={posts} selectPost={selectPost}/>
+                <PostList posts={posts} selectPost={selectPost} deletePost={deletePost}/>
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedPost && !editMode &&

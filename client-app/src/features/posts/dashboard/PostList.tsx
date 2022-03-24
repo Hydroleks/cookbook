@@ -5,9 +5,10 @@ import { Post } from '../../../app/models/post';
 interface Props{
     posts: Post[];
     selectPost:(id: string) => void;
+    deletePost:(id: string) => void;
 }
 
-export default function PostList({posts, selectPost}: Props) {
+export default function PostList({posts, selectPost, deletePost}: Props) {
     return (
         <Segment>
             <Item.Group divided>
@@ -20,6 +21,7 @@ export default function PostList({posts, selectPost}: Props) {
                             <Item.Meta>{post.modified}</Item.Meta>
                             <Item.Extra>
                                 <Button onClick={() => selectPost(post.id)} floated='right' content='View' color='blue'/>
+                                <Button onClick={() => deletePost(post.id)} floated='right' content='Delete' color='red'/>
                                 <Label basic content='Post'/>
                             </Item.Extra>
                         </Item.Content>
