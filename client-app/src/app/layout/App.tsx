@@ -5,15 +5,18 @@ import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
 import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     agent.Posts.list().then(response => {
       setPosts(response);
+      setLoading(false);
     });
   }, []);
 
@@ -46,6 +49,8 @@ function App() {
   function handleDeletePost(id: string) {
     setPosts([...posts.filter(post => post.id !== id)]);
   }
+
+  if(loading) return <LoadingComponent content='Loading App' />
 
   return (
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
