@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Container, List } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
 import { v4 as uuid } from 'uuid';
+import agent from '../api/agent';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -12,9 +12,9 @@ function App() {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    axios.get<Post[]>("https://localhost:5001/api/Posts").then(response => {
+    agent.Posts.list().then(response => {
       console.log(response);
-      setPosts(response.data);
+      setPosts(response);
     });
   }, []);
 
