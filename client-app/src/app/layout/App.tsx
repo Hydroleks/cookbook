@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     agent.Posts.list().then(response => {
-      console.log(response);
       setPosts(response);
     });
   }, []);
