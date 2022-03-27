@@ -12,6 +12,7 @@ function App() {
   const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     agent.Posts.list().then(response => {
@@ -38,12 +39,28 @@ function App() {
   }
 
   function handleCreateOrEditPost(post: Post) {
-    post.id
-      ? setPosts([...posts.filter(p => p.id !== post.id), post])
-      : setPosts([...posts, {...post, id: uuid()}]);
-    
-    setEditMode(false);
-    setSelectedPost(post);
+    setSubmitting(true);
+
+    if(post.id) {
+      agent.Posts.update(post).then(() => {
+        setPosts([...posts.filter(p => p.id !== post.id), post]);
+        setEditMode(false);
+        setSelectedPost(post);
+        setSubmitting(false);
+      })
+    } else {
+      const rightNow = (new Date()).toISOString().slice(0,10);
+      post.id = uuid();
+      post.created = rightNow;
+      post.modified = rightNow;
+      console.log(post);
+      agent.Posts.create(post).then(() => {
+        setPosts([...posts, post]);
+        setEditMode(false);
+        setSelectedPost(post);
+        setSubmitting(false);
+      })
+    }
   }
 
   function handleDeletePost(id: string) {
@@ -68,6 +85,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditPost}
           deletePost={handleDeletePost}
+          submitting={submitting}
           />
       </Container>
     </>
