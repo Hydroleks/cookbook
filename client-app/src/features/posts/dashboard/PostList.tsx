@@ -1,4 +1,4 @@
-import react from 'React';
+import react, { SyntheticEvent, useState } from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { Post } from '../../../app/models/post';
 
