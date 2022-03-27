@@ -64,7 +64,11 @@ function App() {
   }
 
   function handleDeletePost(id: string) {
-    setPosts([...posts.filter(post => post.id !== id)]);
+    setSubmitting(true);
+    agent.Posts.delete(id).then(() => {
+      setPosts([...posts.filter(post => post.id !== id)]);
+      setSubmitting(false);
+    })
   }
 
   if(loading) return <LoadingComponent content='Loading App' />

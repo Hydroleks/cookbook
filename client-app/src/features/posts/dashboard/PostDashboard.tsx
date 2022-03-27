@@ -22,7 +22,7 @@ export default function PostDashboar({posts, selectedPost, selectPost, cancelSel
     return (
         <Grid>
             <Grid.Column width='10'>
-                <PostList posts={posts} selectPost={selectPost} deletePost={deletePost}/>
+                <PostList posts={posts} selectPost={selectPost} deletePost={deletePost} submitting={submitting}/>
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedPost && !editMode &&
