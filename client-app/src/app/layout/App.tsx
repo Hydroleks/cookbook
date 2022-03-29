@@ -6,8 +6,11 @@ import PostDashboar from '../../features/posts/dashboard/PostDashboard';
 import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
+import { useStore } from '../stores/store';
 
 function App() {
+  const {postStore} = useStore();
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
@@ -79,6 +82,9 @@ function App() {
     <> 
       <NavBar openForm={handleFormOpen} />
       <Container style={{marginTop: '7em'}}>
+
+        <h2>{postStore.title}</h2>
+
         <PostDashboar 
           posts={posts}
           selectedPost={selectedPost}
