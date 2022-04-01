@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, List } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
@@ -15,15 +15,11 @@ function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    agent.Posts.list().then(response => {
-      setPosts(response);
-      setLoading(false);
-    });
-  }, []);
+    postStore.loadPosts();
+  }, [postStore]);
 
   function handleSelectPost(id: string) {
     setSelectedPost(posts.find(post => post.id === id));
@@ -75,7 +71,7 @@ function App() {
     })
   }
 
-  if(loading) return <LoadingComponent content='Loading App' />
+  if(postStore.initialLoading) return <LoadingComponent content='Loading App' />
 
   return (
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
@@ -83,12 +79,8 @@ function App() {
     <> 
       <NavBar openForm={handleFormOpen} />
       <Container style={{marginTop: '7em'}}>
-
-        <h2>{postStore.title}</h2>
-        <Button content="Modify Title" positive onClick={postStore.setTitle} />
-
         <PostDashboar 
-          posts={posts}
+          posts={postStore.posts}
           selectedPost={selectedPost}
           selectPost={handleSelectPost}
           cancelSelectPost={handleCanelSelectPost}
