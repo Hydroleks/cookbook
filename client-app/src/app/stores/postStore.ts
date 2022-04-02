@@ -14,7 +14,7 @@ export default class PostStore {
     }
 
     loadPosts = async () => {
-        this.initialLoading = true;
+        this.setInitialLoading(true);
         try {
             const posts = await agent.Posts.list();
             posts.forEach(post => {
@@ -23,10 +23,14 @@ export default class PostStore {
                 post.modified = post.modified.split('T')[0];
                 this.posts.push(post);
             })
-            this.initialLoading = false;
+            this.setInitialLoading(false);
         } catch(error) {
             console.log(error);
-            this.initialLoading = false;
+            this.setInitialLoading(false);
         }
+    }
+
+    setInitialLoading = (state: boolean) => {
+        this.initialLoading = state;
     }
 }
