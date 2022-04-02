@@ -4,7 +4,7 @@ import { Post } from "../models/post";
 
 export default class PostStore {
     posts: Post[] = [];
-    selectedPost: Post | null = null;
+    selectedPost: Post | undefined = undefined;
     editMode = false;
     loading = false;
     initialLoading = false;
@@ -32,5 +32,22 @@ export default class PostStore {
 
     setInitialLoading = (state: boolean) => {
         this.initialLoading = state;
+    }
+
+    selectPost = (id: string) => {
+        this.selectedPost = this.posts.find(post => post.id === id);
+    }
+
+    cancelSelectedPost = () => {
+        this.selectedPost = undefined;
+    }
+
+    openForm = (id?: string) => {
+        id ? this.selectPost(id) : this.cancelSelectedPost();
+        this.editMode = true;
+    }
+
+    closeForm = () => {
+        this.editMode = false;
     }
 }

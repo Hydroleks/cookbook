@@ -77,16 +77,10 @@ function App() {
     // Fragment groups things together, so we can return 2 things without the use of an empty div.
     // Shortcut version using Fragment is just empty <> as below.
     <> 
-      <NavBar openForm={handleFormOpen} />
+      <NavBar/>
       <Container style={{marginTop: '7em'}}>
         <PostDashboar 
           posts={postStore.posts}
-          selectedPost={selectedPost}
-          selectPost={handleSelectPost}
-          cancelSelectPost={handleCanelSelectPost}
-          editMode={editMode}
-          openForm={handleFormOpen}
-          closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditPost}
           deletePost={handleDeletePost}
           submitting={submitting}
