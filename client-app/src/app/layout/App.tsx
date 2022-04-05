@@ -3,7 +3,6 @@ import { Container } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
-import { v4 as uuid } from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
@@ -13,55 +12,11 @@ function App() {
   const {postStore} = useStore();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [selectedPost, setSelectedPost] = useState<Post|undefined>(undefined);
-  const [editMode, setEditMode] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     postStore.loadPosts();
   }, [postStore]);
-
-  function handleSelectPost(id: string) {
-    setSelectedPost(posts.find(post => post.id === id));
-  }
-
-  function handleCanelSelectPost(){
-    setSelectedPost(undefined);
-  }
-
-  function handleFormOpen(id?: string){
-    id ? handleSelectPost(id) : handleCanelSelectPost();
-    setEditMode(true);
-  }
-
-  function handleFormClose(){
-    setEditMode(false);
-  }
-
-  function handleCreateOrEditPost(post: Post) {
-    setSubmitting(true);
-
-    if(post.id) {
-      agent.Posts.update(post).then(() => {
-        setPosts([...posts.filter(p => p.id !== post.id), post]);
-        setEditMode(false);
-        setSelectedPost(post);
-        setSubmitting(false);
-      })
-    } else {
-      const rightNow = (new Date()).toISOString().slice(0,10);
-      post.id = uuid();
-      post.created = rightNow;
-      post.modified = rightNow;
-      console.log(post);
-      agent.Posts.create(post).then(() => {
-        setPosts([...posts, post]);
-        setEditMode(false);
-        setSelectedPost(post);
-        setSubmitting(false);
-      })
-    }
-  }
 
   function handleDeletePost(id: string) {
     setSubmitting(true);
@@ -81,7 +36,6 @@ function App() {
       <Container style={{marginTop: '7em'}}>
         <PostDashboar 
           posts={postStore.posts}
-          createOrEdit={handleCreateOrEditPost}
           deletePost={handleDeletePost}
           submitting={submitting}
           />

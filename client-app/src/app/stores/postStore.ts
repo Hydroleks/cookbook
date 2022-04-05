@@ -1,6 +1,7 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Post } from "../models/post";
+import { v4 as uuid } from 'uuid';
 
 export default class PostStore {
     posts: Post[] = [];
@@ -49,5 +50,46 @@ export default class PostStore {
 
     closeForm = () => {
         this.editMode = false;
+    }
+
+    createPost = async(post: Post) => {
+        this.loading = true;
+        const rightNow = (new Date()).toISOString().slice(0,10);
+        post.id = uuid();
+        post.created = rightNow;
+        post.modified = rightNow;
+
+        try {
+            await agent.Posts.create(post);
+            runInAction(() => {
+                this.posts.push(post);
+                this.selectedPost = post;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch(error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    updatePost = async (post: Post) => {
+        this.loading = true;
+        try {
+            await agent.Posts.update(post);
+            runInAction(() => {
+                this.posts = [...this.posts.filter(p => p.id !== post.id), post];
+                this.selectedPost = post;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch(error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
     }
 }

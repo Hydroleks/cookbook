@@ -9,12 +9,11 @@ import PostList from './PostList';
 
 interface Props{
     posts: Post[];
-    createOrEdit: (post: Post) => void;
     deletePost: (id: string) => void;
     submitting: boolean;
 }
 
-export default observer(function PostDashboar({posts, createOrEdit, deletePost, submitting}: Props) {
+export default observer(function PostDashboar({posts, deletePost, submitting}: Props) {
     const {postStore} = useStore();
     const {selectedPost, editMode} = postStore;
 
@@ -26,7 +25,7 @@ export default observer(function PostDashboar({posts, createOrEdit, deletePost, 
             <Grid.Column width='6'>
                 {selectedPost && !editMode && <PostDetails/>}
                 { editMode && 
-                <PostForm createOrEdit={createOrEdit} submitting={submitting}/> }
+                <PostForm /> }
             </Grid.Column>
         </Grid>
     );
