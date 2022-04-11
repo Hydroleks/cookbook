@@ -92,4 +92,21 @@ export default class PostStore {
             })
         }
     }
+
+    deletePost = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.Posts.delete(id);
+            runInAction(() => {
+                this.posts = [...this.posts.filter(post => post.id !== id)];
+                if(this.selectedPost?.id === id) this.cancelSelectedPost();
+                this.loading = false;
+            })
+        } catch(error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
 }

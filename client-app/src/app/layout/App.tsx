@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import { Post } from '../models/post';
 import NavBar from './NavBar';
 import PostDashboar from '../../features/posts/dashboard/PostDashboard';
-import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
@@ -11,20 +10,9 @@ import { observer } from 'mobx-react-lite';
 function App() {
   const {postStore} = useStore();
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-
   useEffect(() => {
     postStore.loadPosts();
   }, [postStore]);
-
-  function handleDeletePost(id: string) {
-    setSubmitting(true);
-    agent.Posts.delete(id).then(() => {
-      setPosts([...posts.filter(post => post.id !== id)]);
-      setSubmitting(false);
-    })
-  }
 
   if(postStore.initialLoading) return <LoadingComponent content='Loading App' />
 
@@ -34,11 +22,7 @@ function App() {
     <> 
       <NavBar/>
       <Container style={{marginTop: '7em'}}>
-        <PostDashboar 
-          posts={postStore.posts}
-          deletePost={handleDeletePost}
-          submitting={submitting}
-          />
+        <PostDashboar />
       </Container>
     </>
   );

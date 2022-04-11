@@ -1,16 +1,12 @@
+import { observer } from 'mobx-react-lite';
 import react, { SyntheticEvent, useState } from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
-import { Post } from '../../../app/models/post';
 import { useStore } from '../../../app/stores/store';
 
-interface Props{
-    posts: Post[];
-    deletePost:(id: string) => void;
-    submitting: boolean;
-}
-
-export default function PostList({posts, deletePost, submitting}: Props) {
+export default observer(function PostList() {
     const {postStore} = useStore();
+    const {deletePost, posts, loading} = postStore;
+    
     const [target, setTarget] = useState('');
 
     function handlePostDelete(event: SyntheticEvent<HTMLButtonElement>, id: string){
@@ -32,7 +28,7 @@ export default function PostList({posts, deletePost, submitting}: Props) {
                                 <Button onClick={() => postStore.selectPost(post.id)} floated='right' content='View' color='blue'/>
                                 <Button 
                                     name={post.id}
-                                    loading={submitting && target === post.id} 
+                                    loading={loading && target === post.id} 
                                     onClick={(clickEvent) => handlePostDelete(clickEvent, post.id)} 
                                     floated='right' 
                                     content='Delete' 
@@ -45,4 +41,4 @@ export default function PostList({posts, deletePost, submitting}: Props) {
             </Item.Group>
         </Segment>
     );
-}
+})
