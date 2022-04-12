@@ -4,25 +4,24 @@ import { Post } from "../models/post";
 import { v4 as uuid } from 'uuid';
 
 export default class PostStore {
-    posts: Post[] = [];
+    postRegistry = new Map<string, Post>();
     selectedPost: Post | undefined = undefined;
     editMode = false;
     loading = false;
-    initialLoading = false;
+    initialLoading = true;
 
     constructor() {
         makeAutoObservable(this)
     }
 
     loadPosts = async () => {
-        this.setInitialLoading(true);
         try {
             const posts = await agent.Posts.list();
             posts.forEach(post => {
                 // We might want to keep the full time stamp as well as the date.
                 post.created = post.created.split('T')[0];
                 post.modified = post.modified.split('T')[0];
-                this.posts.push(post);
+                this.postRegistry.set(post.id, post);
             })
             this.setInitialLoading(false);
         } catch(error) {
@@ -31,12 +30,16 @@ export default class PostStore {
         }
     }
 
+    get postsByCreatedDate() {
+        return Array.from(this.postRegistry.values()).sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
+    }
+
     setInitialLoading = (state: boolean) => {
         this.initialLoading = state;
     }
 
     selectPost = (id: string) => {
-        this.selectedPost = this.posts.find(post => post.id === id);
+        this.selectedPost = this.postRegistry.get(id);
     }
 
     cancelSelectedPost = () => {
@@ -62,7 +65,7 @@ export default class PostStore {
         try {
             await agent.Posts.create(post);
             runInAction(() => {
-                this.posts.push(post);
+                this.postRegistry.set(post.id, post);
                 this.selectedPost = post;
                 this.editMode = false;
                 this.loading = false;
@@ -80,7 +83,7 @@ export default class PostStore {
         try {
             await agent.Posts.update(post);
             runInAction(() => {
-                this.posts = [...this.posts.filter(p => p.id !== post.id), post];
+                this.postRegistry.set(post.id, post);
                 this.selectedPost = post;
                 this.editMode = false;
                 this.loading = false;
@@ -98,7 +101,7 @@ export default class PostStore {
         try {
             await agent.Posts.delete(id);
             runInAction(() => {
-                this.posts = [...this.posts.filter(post => post.id !== id)];
+                this.postRegistry.delete(id);
                 if(this.selectedPost?.id === id) this.cancelSelectedPost();
                 this.loading = false;
             })

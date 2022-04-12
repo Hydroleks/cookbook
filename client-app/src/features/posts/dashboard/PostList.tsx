@@ -5,8 +5,8 @@ import { useStore } from '../../../app/stores/store';
 
 export default observer(function PostList() {
     const {postStore} = useStore();
-    const {deletePost, posts, loading} = postStore;
-    
+    const {deletePost, postsByCreatedDate, loading} = postStore;
+
     const [target, setTarget] = useState('');
 
     function handlePostDelete(event: SyntheticEvent<HTMLButtonElement>, id: string){
@@ -17,7 +17,7 @@ export default observer(function PostList() {
     return (
         <Segment>
             <Item.Group divided>
-                {posts.map(post => (
+                {postsByCreatedDate.map(post => (
                     <Item key={post.id}>
                         <Item.Content>
                             <Item.Header as='a'>{post.title}</Item.Header>
