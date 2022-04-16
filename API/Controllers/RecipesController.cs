@@ -3,7 +3,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-public class RecipeController : BaseApiController
+public class RecipesController : BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<List<Recipe>>> GetRecipesAsync(CancellationToken cancellationToken)
