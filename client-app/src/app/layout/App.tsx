@@ -1,8 +1,7 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-import { Post } from '../models/post';
 import NavBar from './NavBar';
-import PostDashboar from '../../features/posts/dashboard/PostDashboard';
+import PostDashboard from '../../features/posts/dashboard/PostDashboard';
 import { observer } from 'mobx-react-lite';
 import { Route } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
@@ -16,7 +15,7 @@ function App() {
       <NavBar/>
       <Container style={{marginTop: '7em'}}>
         <Route exact path='/' component={HomePage}/>
-        <Route exact path='/posts' component={PostDashboar}/>
+        <Route exact path='/posts' component={PostDashboard}/>
         <Route exact path='/createPost' component={PostForm}/>
       </Container>
     </>

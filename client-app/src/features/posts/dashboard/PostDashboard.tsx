@@ -7,7 +7,7 @@ import PostDetails from '../details/PostDetails';
 import PostForm from '../form/PostForm';
 import PostList from './PostList';
 
-export default observer(function PostDashboar() {
+export default observer(function PostDashboard() {
     const {postStore} = useStore();
     const {selectedPost, editMode} = postStore;
 
