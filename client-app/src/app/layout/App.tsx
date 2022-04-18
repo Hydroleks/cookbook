@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Route } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import PostForm from '../../features/posts/form/PostForm';
-import RecipeDashboard from '../../features/recipes/RecipeDashboard';
+import RecipeDashboard from '../../features/recipes/dashboard/RecipeDashboard';
 
 function App() {
   return (
