@@ -20,4 +20,8 @@ export default class RecipeStore {
             console.log(error);
         }
     }
+
+    get recipesByCreatedDate() {
+        return Array.from(this.recipeRegistry.values()).sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
+    }
 }

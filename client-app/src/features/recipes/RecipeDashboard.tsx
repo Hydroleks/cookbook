@@ -8,7 +8,7 @@ export default function RecipeDashboard() {
         recipeStore.loadRecipes();
     }, [recipeStore]);
 
-    console.log(recipeStore.recipeRegistry);
+    console.log(recipeStore.recipesByCreatedDate);
 
     return (
         <h2>Recipe Store! - please check console for now.</h2>
