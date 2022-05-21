@@ -5,7 +5,7 @@ import { useStore } from '../../../app/stores/store';
 
 export default function PostDetails(){
     const { postStore } = useStore();
-    const { selectedPost: post, openForm, cancelSelectedPost } = postStore;
+    const { selectedPost: post } = postStore;
 
     if(!post) return <LoadingComponent/>
 
@@ -26,8 +26,8 @@ export default function PostDetails(){
             <span>{post.created}</span>
           </Card.Meta>
           <Button.Group widths='2'>
-              <Button onClick={() => openForm(post.id)} basic color='blue' content='Edit' />
-              <Button onClick={cancelSelectedPost} basic color='grey' content='Cancel' />
+              <Button basic color='blue' content='Edit' />
+              <Button basic color='grey' content='Cancel' />
           </Button.Group>
         </Card.Content>
       </Card>

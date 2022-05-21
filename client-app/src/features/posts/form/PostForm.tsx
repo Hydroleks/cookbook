@@ -4,7 +4,7 @@ import { useStore } from '../../../app/stores/store';
 
 export default function PostForm() {
     const { postStore } = useStore();
-    const { selectedPost, closeForm, createPost, updatePost, loading } = postStore;
+    const { selectedPost, createPost, updatePost, loading } = postStore;
 
     const initialState = selectedPost ?? {
         id: '',
@@ -31,7 +31,7 @@ export default function PostForm() {
                 <Form.Input placeholder='Title' value={post.title} name='title' onChange={handleInputChange} />
                 <Form.TextArea placeholder='Description' value={post.description} name='description' onChange={handleInputChange} />
                 <Button loading={loading} floated='right' positive type='submit' content='Submit'/>
-                <Button onClick={closeForm} floated='right' type='button' content='Cancel'/>
+                <Button floated='right' type='button' content='Cancel'/>
             </Form>
         </Segment>
     )
