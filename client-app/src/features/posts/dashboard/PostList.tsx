@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import react, { SyntheticEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 
@@ -25,7 +26,7 @@ export default observer(function PostList() {
                             <Item.Description>{post.description}</Item.Description>
                             <Item.Meta>{post.modified}</Item.Meta>
                             <Item.Extra>
-                                <Button onClick={() => postStore.selectPost(post.id)} floated='right' content='View' color='blue'/>
+                                <Button as={Link} to={`/posts/${post.id}`} floated='right' content='View' color='blue'/>
                                 <Button 
                                     name={post.id}
                                     loading={loading && target === post.id} 

@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import PostForm from '../../features/posts/form/PostForm';
 import RecipeDashboard from '../../features/recipes/dashboard/RecipeDashboard';
+import PostDetails from '../../features/posts/details/PostDetails';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Container style={{marginTop: '7em'}}>
         <Route exact path='/' component={HomePage}/>
         <Route exact path='/posts' component={PostDashboard}/>
+        <Route exact path='/posts/:id' component={PostDetails}/>
         <Route exact path='/recipes' component={RecipeDashboard}/>
         <Route exact path='/createPost' component={PostForm}/>
       </Container>
