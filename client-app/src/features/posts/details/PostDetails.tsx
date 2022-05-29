@@ -1,13 +1,20 @@
-import React from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Card, Image, Button } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 
-export default function PostDetails(){
+export default observer(function PostDetails(){
     const { postStore } = useStore();
-    const { selectedPost: post } = postStore;
+    const { selectedPost: post, loadPost, initialLoading } = postStore;
+    const { id } = useParams<{id: string}>();
 
-    if(!post) return <LoadingComponent/>
+    useEffect(() => {
+      if(id) loadPost(id);
+    }, [id, loadPost]);
+
+    if(initialLoading || !post) return <LoadingComponent/>
 
     return (
         <Card fluid>
@@ -32,4 +39,4 @@ export default function PostDetails(){
         </Card.Content>
       </Card>
     );
-}
+})

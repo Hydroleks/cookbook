@@ -15,6 +15,7 @@ export default class PostStore {
     }
 
     loadPosts = async () => {
+        this.initialLoading = true;
         try {
             const posts = await agent.Posts.list();
             posts.forEach(post => {
@@ -36,6 +37,7 @@ export default class PostStore {
             try {
                 post = await agent.Posts.details(id);
                 this.setPost(post);
+                this.selectedPost = post;
                 this.setInitialLoading(false);
             } catch (error) {
                 console.log(error);
